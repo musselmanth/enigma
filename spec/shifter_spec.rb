@@ -14,4 +14,13 @@ RSpec.describe Shifter do
     expect(d_shifter.encrypt_character("l")).to eq("e")
   end
 
+  it 'doesnt shift characters not in the character set' do
+    expect(d_shifter.encrypt_character("!")).to eq("!")
+    expect(d_shifter.encrypt_character("6")).to eq("6")
+  end
+
+  it 'encrypts capitals as lowercase' do
+    expect(d_shifter.encrypt_character("L")).to eq("e")
+  end
+
 end
