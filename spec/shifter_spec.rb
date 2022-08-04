@@ -13,4 +13,5 @@ RSpec.describe Shifter do
     expect(d_shifter.encrypt_character("a")).to eq("u")
     expect(d_shifter.encrypt_character("l")).to eq("e")
   end
+
 end

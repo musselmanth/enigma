@@ -6,4 +6,9 @@ class Shifter
     @character_set = ("a".."z").to_a << " "
   end
 
+  def encrypt_character(character)
+      new_character_index = (@character_set.index(character) + @shift) % 27
+      @character_set[new_character_index]
+  end
+
 end
