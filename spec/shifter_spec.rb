@@ -23,4 +23,13 @@ RSpec.describe Shifter do
     expect(d_shifter.encrypt_character("L")).to eq("e")
   end
 
+  it 'can factory itself' do
+    shifters = Shifter.generate_shifters("02715", "040895")
+    expect(shifters).to all(be_instance_of(Shifter))
+    expect(shifters[:a].shift).to eq(3)
+    expect(shifters[:b].shift).to eq(27)
+    expect(shifters[:c].shift).to eq(73)
+    expect(shifters[:d].shift).to eq(20)
+  end
+
 end

@@ -1,4 +1,5 @@
 class Shifter
+
   attr_reader :shift
 
   def initialize(shift)
