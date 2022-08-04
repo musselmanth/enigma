@@ -1,4 +1,5 @@
 require './lib/enigma'
+require './lib/encryptor'
 
 require 'simplecov'
 SimpleCov.start
