@@ -11,6 +11,7 @@ class Cracker < Cryptor
     offsets = (date.to_i ** 2).digits.reverse[-4..-1]
     shift_amounts = get_shift_amounts(cipher)
     ordered_shift_amounts = order_shift_amounts(shift_amounts, (cipher.length - 1) % 4)
+    raw_key_sements = get_raw_key_segments(offsets, ordered_shift_amounts)
   end
 
   def self.get_shift_amounts(cipher)
@@ -27,5 +28,9 @@ class Cracker < Cryptor
     shift_amounts
   end
 
+  def self.get_raw_key_segments(offsets, shifts)
+    results = shifts.map.with_index{ |shift, i| shift - offsets[i] }
+    results.map{ |result| result < 0 ? result + 27 : result }
+  end
 
 end
