@@ -1,18 +1,20 @@
+require './lib/cryptor'
+
 class Enigma
   
   def encrypt(message, key = get_key, date = get_date)
-    encryptor = Encryptor.new(key, date)
+    encryptor = Cryptor.new(key, date, :encrypt)
     {
-      encryption: encryptor.encrypt(message),
+      encryption: encryptor.run(message),
       key: key,
       date: date
     }
   end
 
   def decrypt(code, key, date = get_date)
-    decryptor = Decryptor.new(key, date)
+    decryptor = Cryptor.new(key, date, :decrypt)
     {
-      decryption: decryptor.decrypt(code),
+      decryption: decryptor.run(code),
       key: key,
       date: date
     }
