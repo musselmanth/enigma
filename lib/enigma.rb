@@ -9,6 +9,15 @@ class Enigma
     }
   end
 
+  def decrypt(code, key, date = get_date)
+    decryptor = Decryptor.new(key, date)
+    {
+      decryption: decryptor.decrypt(code),
+      key: key,
+      date: date
+    }
+  end
+
   def get_date
     Time.now.strftime("%d%m%y")
   end
