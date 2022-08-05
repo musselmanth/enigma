@@ -1,3 +1,5 @@
+require './lib/cryptor'
+
 class Enigma
   
   def encrypt(message, key = get_key, date = get_date)

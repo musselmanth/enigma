@@ -1,3 +1,5 @@
+require './lib/shifter'
+
 class Cryptor
 
   attr_reader :shifters
