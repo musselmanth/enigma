@@ -8,8 +8,8 @@ class Cryptor
     @shifters = Shifter.generate_shifters(key, date, action)
   end
 
-  def run(message)
-    characters = message.split(//)
+  def run(input)
+    characters = input.split(//)
     characters.map.with_index do |character, i|
       @shifters[i % 4].shift_character(character)
     end.join
