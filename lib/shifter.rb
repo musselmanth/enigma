@@ -17,9 +17,9 @@ class Shifter
     end
   end
 
-  def self.generate_shifters(key, date, encrypt_or_decrypt)
+  def self.generate_shifters(key, date, action)
     date_key = (date.to_i ** 2).digits.reverse[-4..-1]
-    reversor = (encrypt_or_decrypt == :decrypt ? -1 : 1)
+    reversor = (action == :decrypt ? -1 : 1)
     (0..3).map{ |i| Shifter.new(reversor * (key[i..i+1].to_i + date_key[i])) }
   end
 
