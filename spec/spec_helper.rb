@@ -1,6 +1,4 @@
 require './lib/enigma'
-require './lib/encryptor'
-require './lib/decryptor'
 require './lib/shifter'
 require './lib/cryptor'
 
