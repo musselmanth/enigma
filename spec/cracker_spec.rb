@@ -4,6 +4,6 @@ RSpec.describe Cracker do
   end
 
   it 'can get a key for which letter was used for each shifter' do
-    expect(Cracker.shifter_key("keder ohulwthnw")).to eq(["d", " ", "e", "n"])
+    expect(Cracker.get_shift_amounts("keder ohulwthnw")).to eq([-7, 3, 0, 19])
   end
 end
