@@ -17,7 +17,7 @@ RSpec.describe Cryptor do
     end
   end
 
-  contex 'decrypt' do
+  context 'decrypt' do
     let(:decryptor) {Cryptor.new("02715", "040895", :decrypt)}
 
     it 'exists and has attributes' do
