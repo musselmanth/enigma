@@ -25,7 +25,7 @@ RSpec.describe Shifter do
 
   it 'can factory itself' do
     shifters = Shifter.generate_shifters("02715", "040895")
-    expect(shifters).to all(be_instance_of(Shifter))
+    expect(shifters.values).to all(be_instance_of(Shifter))
     expect(shifters[:a].shift).to eq(3)
     expect(shifters[:b].shift).to eq(27)
     expect(shifters[:c].shift).to eq(73)
