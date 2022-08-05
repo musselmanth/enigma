@@ -5,7 +5,6 @@ class Encryptor
   end
 
   def encrypt(message, key, date)
-    generate_shifters(key, date)
   end
 
 end
