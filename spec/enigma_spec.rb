@@ -6,4 +6,34 @@ RSpec.describe Enigma do
     expect(enigma).to be_an Enigma
   end
 
+  it 'encripts a message when the key and date are provided' do
+    expected = {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    }
+    expect(enigma.encrypt("hello world", "02715", "040895")).to eq(expected)
+  end
+
+  it 'can use todays date if one is not provided' do
+    allow(Time).to receive(:now).and_return(Time.new(1995, 8, 4))
+    expected = {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    }
+    expect(enigma.encrypt("hello world", "02715")).to eq(expected)
+  end
+
+  it 'can get a random key if one isnt provided' do
+    allow(Time).to receive(:now).and_return(Time.new(1995, 8, 4))
+    allow(enigma).to receive(:rand).and_return(2715)
+    expected = {
+      encryption: "keder ohulw",
+      key: "02715",
+      date: "040895"
+    }
+    expect(enigma.encrypt("hello world")).to eq(expected)
+  end
+
 end
