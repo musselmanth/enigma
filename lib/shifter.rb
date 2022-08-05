@@ -7,7 +7,7 @@ class Shifter
     @character_set = ("a".."z").to_a << " "
   end
 
-  def encrypt_character(character)
+  def shift_character(character)
     character.downcase!
     if @character_set.include?(character)
       new_character_index = (@character_set.index(character) + @shift) % 27
@@ -17,9 +17,10 @@ class Shifter
     end
   end
 
-  def self.generate_shifters(key, date)
+  def self.generate_shifters(key, date, encrypt_or_decrypt)
     date_key = (date.to_i ** 2).digits.reverse[-4..-1]
-    (0..3).map{ |i| Shifter.new(key[i..i+1].to_i + date_key[i]) }
+    reversor = (encrypt_or_decrypt == :decrypt ? -1 : 1)
+    (0..3).map{ |i| Shifter.new(reversor * (key[i..i+1].to_i + date_key[i])) }
   end
 
 end
