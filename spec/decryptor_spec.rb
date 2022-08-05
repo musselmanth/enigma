@@ -7,11 +7,11 @@ RSpec.describe Decryptor do
   end
   
   it 'can decrypt a message with no edge cases' do
-    expect(decryptor.encrypt("keder ohulw")).to eq("hello world")
+    expect(decryptor.decrypt("keder ohulw")).to eq("hello world")
   end
 
-  xit 'can decrypt edge cases' do
-    expect(decryptor.encrypt("keder!sprrdx?")).to eq("Hello! WORLD?")
+  it 'can decrypt edge cases' do
+    expect(decryptor.decrypt("keder!sprrdx?")).to eq("hello! world?")
   end
 
 end
