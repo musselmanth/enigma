@@ -12,10 +12,13 @@ class Cracker < Cryptor
     shifter_key = get_shifter_key(cipher)
   end
 
-  def self.get_shifter_key(cipher)
+  def self.get_shift_amounts(cipher)
+    character_set = ("a".."z").to_a << " "
     expected_chars = [" ", "e", "n", "d"]
-    ((cipher.length - 4) % 4).times{ expected_chars.rotate! }
-    expected_chars
+    cipher_last_four = cipher.split(//)[-4..-1]
+    expected_chars.map.with_index do |expected_char, i|
+      character_set.index(cipher_last_four[i]) - character_set.index(expected_char)
+    end
   end
 
 
