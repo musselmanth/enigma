@@ -3,7 +3,9 @@ require './lib/cracker'
 
 class Enigma
   
-  def encrypt(message, key = get_key, date = get_date)
+  def encrypt(message, key = nil, date = nil)
+    key ||= get_key
+    date ||= get_date
     encryptor = Cryptor.new(key, date, :encrypt)
     {
       encryption: encryptor.run(message),
@@ -12,7 +14,8 @@ class Enigma
     }
   end
 
-  def decrypt(cipher, key, date = get_date)
+  def decrypt(cipher, key, date = nil)
+    date ||= get_date
     decryptor = Cryptor.new(key, date, :decrypt)
     {
       decryption: decryptor.run(cipher),
@@ -21,7 +24,8 @@ class Enigma
     }
   end
 
-  def crack(cipher, date = get_date)
+  def crack(cipher, date = nil)
+    date ||= get_date
     cracker = Cracker.new(cipher, date)
     {
       decryption: cracker.run(cipher),
