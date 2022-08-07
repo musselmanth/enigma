@@ -49,4 +49,8 @@ RSpec.describe Cracker do
     expect(cracker.run("keder ohulwthnw")).to eq("hello world end")
   end
 
+  it 'can tell you its key' do
+    expect(cracker.key).to eq("02715")
+  end
+
 end
