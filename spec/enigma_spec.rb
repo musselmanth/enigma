@@ -55,4 +55,23 @@ RSpec.describe Enigma do
     expect(enigma.decrypt("keder ohulw", "02715")).to eq(expected)
   end
 
+  it 'can crack a message when the date is provided' do
+    expected = {
+      decryption: "hello world end",
+      date: "040895",
+      key: "02715"
+    }
+    expect(enigma.crack("keder ohulwthnw", "040895")).to eq(expected)
+  end
+
+  it 'can crack a message with todays date' do
+    allow(Time).to receive(:now).and_return(Time.new(1995, 8, 4))
+    expected = {
+      decryption: "hello world end",
+      date: "040895",
+      key: "02715"
+    }
+    expect(enigma.crack("keder ohulwthnw")).to eq(expected)
+  end
+
 end

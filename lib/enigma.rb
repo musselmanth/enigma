@@ -11,12 +11,21 @@ class Enigma
     }
   end
 
-  def decrypt(code, key, date = get_date)
+  def decrypt(cipher, key, date = get_date)
     decryptor = Cryptor.new(key, date, :decrypt)
     {
-      decryption: decryptor.run(code),
+      decryption: decryptor.run(cipher),
       key: key,
       date: date
+    }
+  end
+
+  def crack(cipher, date = get_date)
+    cracker = Cracker.new(cipher, date)
+    {
+      decryption: cracker.run(cipher),
+      date: date,
+      key: cracker.key
     }
   end
 

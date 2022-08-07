@@ -1,6 +1,7 @@
 require './lib/enigma'
 require './lib/shifter'
 require './lib/cryptor'
+require './lib/cracker'
 
 require 'simplecov'
 SimpleCov.start
