@@ -38,4 +38,9 @@ RSpec.describe Cracker do
     expect(Cracker.is_key_solution?([15, 64, 34, 46])).to be false
   end
 
+  it 'can combine matching key segments into a key' do
+    expect(Cracker.combine_key_segments([2, 27, 71, 15])).to eq("02715")
+    expect(Cracker.combine_key_segments([12, 23, 36, 61])). to eq("12361")
+  end
+
 end
