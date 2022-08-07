@@ -19,9 +19,16 @@ RSpec.describe Cracker do
     expect(Cracker.get_possible_key_segments([2, 0, 17, 15])).to eq([[2, 29, 56, 83], [0, 27, 54, 81], [17, 44, 71, 98], [15, 42, 69, 96]])
   end
 
-  it 'can take possible_key_segments and get the real ones' do
+  xit 'can take possible_key_segments and get the real ones' do
     input = [[2, 29, 56, 83], [0, 27, 54, 81], [17, 44, 71, 98], [15, 42, 69, 96]]
     expect(Cracker.get_matching_key_segments(input)).to eq([2, 27, 71, 15])
+  end
+
+  it 'can test if two key segments are matching' do
+    expect(Cracker.is_matching_segments?(2, 27)).to be true
+    expect(Cracker.is_matching_segments?(45, 57)).to be true
+    expect(Cracker.is_matching_segments?(12, 2)).to be false
+    expect(Cracker.is_matching_segments?(12, 14)).to be false
   end
 
 end
