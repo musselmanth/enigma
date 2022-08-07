@@ -31,4 +31,11 @@ RSpec.describe Cracker do
     expect(Cracker.is_matching_segments?(12, 14)).to be false
   end
 
+  it 'can confirm whether a set of key segments is a valid solution' do
+    expect(Cracker.is_key_solution?([2, 27, 71, 15])).to be true
+    expect(Cracker.is_key_solution?([12, 25, 51, 18])).to be true
+    expect(Cracker.is_key_solution?([12, 2, 27, 71])).to be false
+    expect(Cracker.is_key_solution?([15, 64, 34, 46])).to be false
+  end
+
 end
