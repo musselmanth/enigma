@@ -11,8 +11,8 @@ class Cracker < Cryptor
     offsets = (date.to_i ** 2).digits.reverse[-4..-1]
     shift_amounts = Cracker.get_shift_amounts(cipher)
     ordered_shift_amounts = Cracker.order_shift_amounts(shift_amounts, (cipher.length - 1) % 4)
-    raw_key_sements = Cracker.get_raw_key_segments(offsets, ordered_shift_amounts)
-    possible_key_segements = Cracker.get_possible_key_segments(raw_key_segments)
+    raw_key_segments = Cracker.get_raw_key_segments(offsets, ordered_shift_amounts)
+    possible_key_segments = Cracker.get_possible_key_segments(raw_key_segments)
     matching_key_segments = Cracker.get_matching_key_segments(possible_key_segments)
     Cracker.combine_key_segments(matching_key_segments)
   end
@@ -79,9 +79,5 @@ class Cracker < Cryptor
     str_key_segments = key_segments.map{|segment| segment.to_s.rjust(2, "0")}
     "#{str_key_segments[0]}#{str_key_segments[1][1]}#{str_key_segments[2][1]}#{str_key_segments[3][1]}"
   end
-
-
-
-
 
 end
