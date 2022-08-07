@@ -15,7 +15,7 @@ def run
   encrypted_string = input.read
 
   if !/^[a-zA-Z ]*$/.match?(encrypted_string[-4..-1])
-    puts "Input file ends in invalid characters."
+    puts "Input file ends in invalid characters. File cannot be cracked."
     exit
   end
 
