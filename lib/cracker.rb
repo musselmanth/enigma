@@ -2,9 +2,11 @@ require './lib/cryptor'
 
 class Cracker < Cryptor
 
+  attr_reader :key
+
   def initialize(cipher, date)
-    key = crack_key(cipher, date)
-    super(key, date, :decrypt)
+    @key = crack_key(cipher, date)
+    super(@key, date, :decrypt)
   end
 
   def crack_key(cipher, date)
