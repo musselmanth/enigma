@@ -50,6 +50,13 @@ class Cracker < Cryptor
     
   end
 
+  def self.is_key_solution? (key_segments)
+    key_seg_strings = key_segments.map{|segment| segment.to_s.rjust(2, "0")}
+    key_seg_strings[0][-1] == key_seg_strings[1][0] &&
+    key_seg_strings[1][-1] == key_seg_strings[2][0] &&
+    key_seg_strings[2][-1] == key_seg_strings[3][0]
+  end
+
   def self.is_matching_segments? (segment1, segment2)
     segment1 = segment1.to_s.rjust(2, "0")
     segment2 = segment2.to_s.rjust(2, "0")
