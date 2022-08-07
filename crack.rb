@@ -5,22 +5,29 @@ def run
     invalid_arguments_output
     exit
   end
+
   input_file_path = ARGV[0]
   output_file_path = ARGV[1]
   date = ARGV[2]
 
   input = File.open(input_file_path, "r")
   output = File.open(output_file_path, "w")
+  encrypted_string = input.read
+
+  if !/^[a-zA-Z ]*$/.match?(encrypted_string[-4..-1])
+    puts "Input file ends in invalid characters."
+    exit
+  end
 
   enigma = Enigma.new
-  cracked = enigma.crack(input.read, date)
+  cracked = enigma.crack(encrypted_string, date)
   output.write(cracked[:decryption])
 
   puts "Created '#{output_file_path}' with the key #{cracked[:key]} and the date #{cracked[:date]}."
 end
 
 def valid_arguments?
-  ARGV.length == 3 &&
+  (ARGV.length == 3 || ARGV.length == 2) &&
   ARGV[0][-4..-1] == ".txt" &&
   File.exist?(ARGV[0]) &&
   ARGV[1][-4..-1] == ".txt" &&

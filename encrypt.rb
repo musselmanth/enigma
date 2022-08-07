@@ -2,7 +2,7 @@ require './lib/enigma.rb'
 
 def run
   #if no key provided but date is provided, put date into ARGV[3] place and set key arg to nil.
-  if ARGV[2].length == 6
+  if ARGV[2] && ARGV[2].length == 6
     ARGV[3] = ARGV[2]
     ARGV[2] = nil
   end
