@@ -1,4 +1,5 @@
 require './lib/cryptor'
+require './lib/cracker'
 
 class Enigma
   

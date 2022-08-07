@@ -1,0 +1,36 @@
+require './lib/enigma.rb'
+
+def run
+  if !valid_arguments?
+    puts "Please include two .txt input and output file names, and a date formatted like the example below."
+    puts "The input file should be in the same directory as the 'crack.rb' file."
+    puts "The date should be a 6 digit number formatted DDMMYY"
+    puts "Example: 'ruby crack.rb input.txt output.txt 070822'"
+    exit
+  end
+  input_file_path = ARGV[0]
+  output_file_path = ARGV[1]
+  date = ARGV[2]
+
+  input = File.open(input_file_path, "r")
+  output = File.open(output_file_path, "w")
+
+  enigma = Enigma.new
+  cracked = enigma.crack(input.read, date)
+  output.write(cracked[:decryption])
+
+  puts "Created '#{output_file_path}' with the key #{cracked[:key]} and the date #{cracked[:date]}."
+end
+
+def valid_arguments?
+  ARGV.length == 3 &&
+  ARGV[0][-4..-1] == ".txt" &&
+  File.exist?(ARGV[0]) &&
+  ARGV[1][-4..-1] == ".txt" &&
+  ARGV[2].length == 6 &&
+  ARGV[2].to_i.to_s.rjust(6, "0") == ARGV[2]
+end
+
+run
+
+

@@ -17,7 +17,6 @@ def run
   input = File.open(input_file_path, "r")
   output = File.open(output_file_path, "w")
   
-
   enigma = Enigma.new
   decrypted = enigma.decrypt(input.read, key, date)
   output.write(decrypted[:decryption])
