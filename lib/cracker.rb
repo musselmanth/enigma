@@ -51,6 +51,7 @@ class Cracker < Cryptor
   end
 
   def get_matching_key_segments(possible_key_segments)
+    count = 0
     solution = []
     possible_key_segments[0].each do |a_key|
       possible_key_segments[1].each do |b_key|
@@ -58,6 +59,7 @@ class Cracker < Cryptor
           possible_key_segments[3].each do |d_key|
             possible_solution = [a_key, b_key, c_key, d_key]
             solution = possible_solution if is_key_solution?(possible_solution)
+            count+=1
           end
         end
       end

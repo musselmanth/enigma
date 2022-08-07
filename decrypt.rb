@@ -9,7 +9,6 @@ def run
   output_file_path = ARGV[1]
   key = ARGV[2]
   date = ARGV[3]
-  require 'pry'; binding.pry
 
   input = File.open(input_file_path, "r")
   output = File.open(output_file_path, "w")
