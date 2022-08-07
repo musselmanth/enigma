@@ -20,6 +20,15 @@ class Enigma
     }
   end
 
+  def crack(cipher, date = get_date)
+    cracker = Cracker.new(cipher, date)
+    {
+      decryption: cracker.run(cipher),
+      date: date,
+      key: cracker.key
+    }
+  end
+
   def get_date
     Time.now.strftime("%d%m%y")
   end
