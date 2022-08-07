@@ -4,7 +4,7 @@ class Cracker < Cryptor
 
   def initialize(cipher, date)
     key = crack_key(cipher, date)
-    super(cipher, key, date)
+    super(key, date, :decrypt)
   end
 
   def crack_key(cipher, date)
