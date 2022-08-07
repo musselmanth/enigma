@@ -46,5 +46,18 @@ class Cracker < Cryptor
     possible_key_segments
   end
 
+  def self.get_matching_key_segments(possible_key_segments)
+    
+  end
+
+  def self.is_matching_segments? (segment1, segment2)
+    segment1 = segment1.to_s.rjust(2, "0")
+    segment2 = segment2.to_s.rjust(2, "0")
+    segment1[-1] == segment2[0]
+  end
+
+
+
+
 
 end
