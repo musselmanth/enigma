@@ -29,7 +29,6 @@ end
 def valid_arguments?
   (ARGV.length == 3 || ARGV.length == 2) &&
   ARGV[0][-4..-1] == ".txt" &&
-  File.exist?(ARGV[0]) &&
   ARGV[1][-4..-1] == ".txt" &&
   (ARGV[2] ? ARGV[2].length == 6 : true) &&
   (ARGV[2] ? ARGV[2].to_i.to_s.rjust(6, "0") == ARGV[2] : true)

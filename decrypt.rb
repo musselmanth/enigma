@@ -12,9 +12,10 @@ def run
 
   input = File.open(input_file_path, "r")
   output = File.open(output_file_path, "w")
+  cipher = input.read
   
   enigma = Enigma.new
-  decrypted = enigma.decrypt(input.read, key, date)
+  decrypted = enigma.decrypt(cipher, key, date)
   output.write(decrypted[:decryption])
 
   puts "Created '#{output_file_path}' with the key #{decrypted[:key]} and the date #{decrypted[:date]}."
@@ -23,7 +24,6 @@ end
 def valid_arguments?
   (ARGV.length == 3 || ARGV.length == 4) &&
   ARGV[0][-4..-1] == ".txt" &&
-  File.exist?(ARGV[0]) &&
   ARGV[1][-4..-1] == ".txt" &&
   ARGV[2].length == 5 &&
   ARGV[2].to_i.to_s.rjust(5, "0") == ARGV[2] &&

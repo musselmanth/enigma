@@ -19,9 +19,10 @@ def run
 
   input = File.open(input_file_path, "r")
   output = File.open(output_file_path, "w")
+  message = input.read
 
   enigma = Enigma.new
-  encrypted = enigma.encrypt(input.read, key, date)
+  encrypted = enigma.encrypt(message, key, date)
   output.write(encrypted[:encryption])
 
   puts "Created '#{output_file_path}' with the key #{encrypted[:key]} and the date #{encrypted[:date]}."
