@@ -45,4 +45,8 @@ RSpec.describe Cracker do
     expect(cracker.combine_key_segments([12, 23, 36, 61])). to eq("12361")
   end
 
+  it 'can crack a code given only a date' do
+    expect(cracker.run("keder ohulwthnw")).to eq("hello world end")
+  end
+
 end
