@@ -17,32 +17,25 @@ RSpec.describe Cracker do
     expect(cracker.get_lowest_key_segments([1, 0, 2, 5], [3, 0, 19, -7])).to eq([2, 0, 17, 15])
   end
 
-  it 'can get the real key_segments from the raw_key_segments' do
-    expect(cracker.get_all_possible_key_segments([2, 0, 17, 15])).to eq([[2, 29, 56, 83], [0, 27, 54, 81], [17, 44, 71, 98], [15, 42, 69, 96]])
+  it 'can get all the possible key_segments from the lowest_key_segments' do
+    expect(cracker.get_all_possible_key_segments([2, 0, 17, 15])).to eq([["02", "29", "56", "83"], ["00", "27", "54", "81"], ["17", "44", "71", "98"], ["15", "42", "69", "96"]])
   end
 
   it 'can take possible_key_segments and get the real ones' do
-    input = [[2, 29, 56, 83], [0, 27, 54, 81], [17, 44, 71, 98], [15, 42, 69, 96]]
-    expect(cracker.get_matching_key_segments(input)).to eq([2, 27, 71, 15])
-  end
-
-  it 'can test if two key segments are matching' do
-    expect(cracker.is_matching_segments?(2, 27)).to be true
-    expect(cracker.is_matching_segments?(45, 57)).to be true
-    expect(cracker.is_matching_segments?(12, 2)).to be false
-    expect(cracker.is_matching_segments?(12, 14)).to be false
+    input = [["02", "29", "56", "83"], ["00", "27", "54", "81"], ["17", "44", "71", "98"], ["15", "42", "69", "96"]]
+    expect(cracker.get_matching_key_segments(input)).to eq(["02", "27", "71", "15"])
   end
 
   it 'can confirm whether a set of key segments is a valid solution' do
-    expect(cracker.is_key_solution?([2, 27, 71, 15])).to be true
-    expect(cracker.is_key_solution?([12, 25, 51, 18])).to be true
-    expect(cracker.is_key_solution?([12, 2, 27, 71])).to be false
-    expect(cracker.is_key_solution?([15, 64, 34, 46])).to be false
+    expect(cracker.is_key_solution?(["02", "27", "71", "15"])).to be true
+    expect(cracker.is_key_solution?(["12", "25", "51", "18"])).to be true
+    expect(cracker.is_key_solution?(["12", "02", "27", "71"])).to be false
+    expect(cracker.is_key_solution?(["15", "64", "34", "46"])).to be false
   end
 
   it 'can combine matching key segments into a key' do
-    expect(cracker.combine_key_segments([2, 27, 71, 15])).to eq("02715")
-    expect(cracker.combine_key_segments([12, 23, 36, 61])). to eq("12361")
+    expect(cracker.combine_key_segments(["02", "27", "71", "15"])).to eq("02715")
+    expect(cracker.combine_key_segments(["12", "23", "36", "61"])). to eq("12361")
   end
 
   it 'can crack a code given only a date' do
