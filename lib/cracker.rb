@@ -13,8 +13,8 @@ class Cracker < Cryptor
     offsets = (date.to_i ** 2).digits.reverse[-4..-1]
     shift_amounts = get_shift_amounts(cipher)
     ordered_shift_amounts = order_shift_amounts(shift_amounts, (cipher.length - 1) % 4)
-    raw_key_segments = get_raw_key_segments(offsets, ordered_shift_amounts)
-    possible_key_segments = get_possible_key_segments(raw_key_segments)
+    lowest_key_segments = get_lowest_key_segments(offsets, ordered_shift_amounts)
+    possible_key_segments = get_all_possible_key_segments(lowest_key_segments)
     matching_key_segments = get_matching_key_segments(possible_key_segments)
     combine_key_segments(matching_key_segments)
   end
@@ -33,12 +33,17 @@ class Cracker < Cryptor
     shift_amounts
   end
 
-  def get_raw_key_segments(offsets, shifts)
+  def get_lowest_key_segments(offsets, shifts)
     results = shifts.map.with_index{ |shift, i| shift - offsets[i] }
-    results.map{ |result| result < 0 ? result + 27 : result }
+    results.map do |result| 
+      until result >= 0
+        result += 27
+      end
+      result
+    end
   end
 
-  def get_possible_key_segments(raw_key_segments)
+  def get_all_possible_key_segments(raw_key_segments)
     possible_key_segments = [[],[],[],[]]
     raw_key_segments.each_with_index do |key_seg, i|
       possible_key_seg = key_seg
@@ -51,7 +56,6 @@ class Cracker < Cryptor
   end
 
   def get_matching_key_segments(possible_key_segments)
-    count = 0
     solution = []
     possible_key_segments[0].each do |a_key|
       possible_key_segments[1].each do |b_key|
@@ -59,7 +63,6 @@ class Cracker < Cryptor
           possible_key_segments[3].each do |d_key|
             possible_solution = [a_key, b_key, c_key, d_key]
             solution = possible_solution if is_key_solution?(possible_solution)
-            count+=1
           end
         end
       end
