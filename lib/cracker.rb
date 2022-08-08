@@ -43,17 +43,16 @@ class Cracker < Cryptor
     end
   end
 
-  def get_all_possible_key_segments(raw_key_segments)
-    possible_key_segments = [[],[],[],[]]
-    raw_key_segments.each_with_index do |key_seg, i|
-      possible_key_seg = key_seg
-      until possible_key_seg.digits.length > 2
-        possible_key_segments[i] << possible_key_seg
-        possible_key_seg += 27
+  def get_all_possible_key_segments(lowest_key_segments)
+    lowest_key_segments.map.with_index do |key_seg, i|
+      possible_key_segs = []
+      until key_seg.digits.length > 2
+        possible_key_segs << key_seg
+        key_seg += 27
       end
+      possible_key_segs
     end
-    possible_key_segments
-  end
+  end 
 
   def get_matching_key_segments(possible_key_segments)
     solution = []
