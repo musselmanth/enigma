@@ -17,9 +17,9 @@ class Cryptor
     removed_chars = split_chars[:removed_chars]
     encrypted = characters.map.with_index do |character, i|
       @shifters[i % 4].shift_character(character)
-    end.join
-    # final_encryption = insert_removed_chars(encrypted, removed_chars)
-    # final_encryption.join
+    end
+    final_encryption = insert_removed_chars(encrypted, removed_chars)
+    final_encryption.join
   end
 
   def remove_characters(characters)
@@ -31,6 +31,10 @@ class Cryptor
     {removed_chars: removed_chars, remaining_chars: remaining_chars}
   end
 
-
+  def insert_removed_chars(encrypted, removed_chars)
+    removed_chars.inject(encrypted) do |encrypted, (i, char)|
+      encrypted.insert(i, char)
+    end
+  end
 
 end

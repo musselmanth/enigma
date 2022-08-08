@@ -9,7 +9,6 @@ class Shifter
   end
 
   def shift_character(character)
-    character.downcase!
     new_character_index = (CHARACTER_SET.index(character) + @shift) % 27
     CHARACTER_SET[new_character_index]
   end
