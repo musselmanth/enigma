@@ -10,6 +10,7 @@ class Cracker < Cryptor
   end
 
   def crack_key(cipher, date)
+    cipher = remove_characters(cipher.downcase.split(//))[:remaining_chars]
     offsets = (date.to_i ** 2).digits.reverse[-4..-1]
     shift_amounts = get_shift_amounts(cipher)
     ordered_shift_amounts = order_shift_amounts(shift_amounts, (cipher.length - 1) % 4)
@@ -20,11 +21,10 @@ class Cracker < Cryptor
   end
 
   def get_shift_amounts(cipher)
-    character_set = ("a".."z").to_a << " "
     expected_chars = [" ", "e", "n", "d"]
-    cipher_last_four = cipher.split(//)[-4..-1]
+    cipher_last_four = cipher[-4..-1]
     expected_chars.map.with_index do |expected_char, i|
-      character_set.index(cipher_last_four[i]) - character_set.index(expected_char)
+      CHARACTER_SET.index(cipher_last_four[i]) - CHARACTER_SET.index(expected_char)
     end
   end
 
