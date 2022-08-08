@@ -16,10 +16,6 @@ RSpec.describe Shifter do
       expect(d_shifter.shift_character("l")).to eq("e")
     end
 
-    it 'encrypts capitals as lowercase' do
-      expect(d_shifter.shift_character("L")).to eq("e")
-    end
-
     it 'can factory itself for encryption' do
       shifters = Shifter.generate_shifters("02715", "040895", :encrypt)
       expect(shifters).to all(be_instance_of(Shifter))
