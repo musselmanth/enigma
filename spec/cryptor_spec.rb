@@ -13,7 +13,16 @@ RSpec.describe Cryptor do
     end
 
     it 'can encrypt edge cases' do
-      expect(encryptor.run("Hello! WORLD?")).to eq("keder!sprrdx?")
+      expect(encryptor.run("Hello! WORLD?")).to eq("keder! ohulw?")
+    end
+
+    it 'can remove characters no in the characters set and store them for post encryption insertion' do
+      input_chars = ["a", "b", "3", "c", "d", "?", "e", "!", "f"]
+      expected = {
+        removed_chars: { 2 => "3", 5 => "?" , 7 => "!" },
+        remaining_chars: ["a", "b", "c", "d", "e", "f"]
+      }
+      expect(encryptor.remove_characters(input_chars)).to eq(expected)
     end
   end
 
@@ -30,7 +39,7 @@ RSpec.describe Cryptor do
     end
   
     it 'can decrypt edge cases' do
-      expect(decryptor.run("keder!sprrdx?")).to eq("hello! world?")
+      expect(decryptor.run("keder! ohulw?")).to eq("hello! world?")
     end
 
   end
