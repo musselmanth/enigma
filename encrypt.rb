@@ -1,55 +1,46 @@
 require './lib/enigma.rb'
+require 'date'
 
 def run
-  #if no key provided but date is provided, put date into ARGV[3] place and set key arg to nil.
-  if ARGV[2] && ARGV[2].length == 6
-    ARGV[3] = ARGV[2]
-    ARGV[2] = nil
-  end
-
-  unless valid_arguments?
-    invalid_arguments_output
-    exit
-  end
-
-  input_file_path = ARGV[0]
-  output_file_path = ARGV[1]
-  key = ARGV[2]
-  date = ARGV[3]
-
-  input = File.open(input_file_path, "r")
-  output = File.open(output_file_path, "w")
+  args = get_cl_arguments
+  input = File.open(args[:input], "r")
+  output = File.open(args[:output], "w")
   message = input.read
 
   enigma = Enigma.new
-  encrypted = enigma.encrypt(message, key, date)
+  encrypted = enigma.encrypt(message, args[:key], args[:date])
   output.write(encrypted[:encryption])
 
-  puts "Created '#{output_file_path}' with the key #{encrypted[:key]} and the date #{encrypted[:date]}."
+  puts "Created '#{args[:output]}' with the key #{encrypted[:key]} and the date #{encrypted[:date]}."
 end
 
-def valid_arguments?
-  ( ARGV.length == 2 || ARGV.length == 3 || ARGV.length == 4 ) &&
-  ARGV[0][-4..-1] == ".txt" &&
-  ARGV[1][-4..-1] == ".txt"
-  (ARGV[2] ? ARGV[2].length == 5 : true) &&
-  (ARGV[2] ? ARGV[2].to_i.to_s.rjust(5, "0") == ARGV[2] : true) &&
-  (ARGV[3] ? ARGV[3].length == 6 : true) && 
-  (ARGV[3] ? ARGV[3].to_i.to_s.rjust(6, "0") == ARGV[3] : true )
+def get_cl_arguments
+  key = ARGV.include?("-k") ? ARGV[ARGV.index("-k") + 1] : nil
+  date = ARGV.include?("-d") ? ARGV[ARGV.index("-d") + 1] : nil
+  args = {input: ARGV[0], output: ARGV[1], key: key, date: date}
+  unless valid_arguments?(args)
+    invalid_arguments_output
+    exit
+  end
+  args
+end
+
+def valid_arguments?(args)
+  File.extname(args[:input]) == ".txt" &&
+  File.extname(args[:output]) == ".txt" &&
+  File.exist?(args[:input]) &&
+  (args[:key] ? args[:key].length == 5 : true) &&
+  (args[:key] ? args[:key].to_i.to_s.rjust(5, "0") == args[:key] : true) &&
+  (args[:date] ? args[:date].length == 6 : true) &&
+  (args[:date] ? Date.valid_date?(args[:date][4..5].to_i, args[:date][2..3].to_i, args[:date][0..1].to_i) : true)
 end
 
 def invalid_arguments_output
-  puts
-  puts "Please include two .txt input and output file names formatted like the example below."
-  puts "Use file paths relative to the current directory in your terminal."
-  puts "Optionally you may provide a key (5 digit number) to use for encryption."
-  puts "You may also provide a date formatted DDMMYY."
-  puts "Examples:"
-  puts "'ruby encrypt.rb input.txt output.txt'"
-  puts "'ruby encrypt.rb input.txt output.txt 12345'"
-  puts "'ruby encrypt.rb input.txt output.txt 12345 070822'"
-  puts "'ruby encrypt.rb input.txt output.txt 070822'"
-  puts
+  puts "\nPlease include two .txt input and output file names formatted like the example below."
+  puts "Optional flags: "
+  puts "-k #####     Provide a five digit key to use for encryption."
+  puts "-d DDMMYY    Provide a specific six digit date to use for encryption."
+  puts "Example: ruby encrypt.rb input.txt output.txt -k 12345 -d 151221\n\n"
 end
 
 run
