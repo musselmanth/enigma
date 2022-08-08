@@ -1,20 +1,17 @@
 class Shifter
 
+  CHARACTER_SET = ("a".."z").to_a << " "
+
   attr_reader :shift
 
   def initialize(shift)
     @shift = shift
-    @character_set = ("a".."z").to_a << " "
   end
 
   def shift_character(character)
     character.downcase!
-    if @character_set.include?(character)
-      new_character_index = (@character_set.index(character) + @shift) % 27
-      @character_set[new_character_index]
-    else
-      character
-    end
+    new_character_index = (CHARACTER_SET.index(character) + @shift) % 27
+    CHARACTER_SET[new_character_index]
   end
 
   def self.generate_shifters(key, date, action)
