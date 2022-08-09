@@ -37,9 +37,9 @@ end
 def get_cl_arguments
   help_output if ARGV.include?("--help")
   args = {}
-  args[:action] = :encrypt if ARGV.include?("--encrypt") || ARGV.include?("-e")
-  args[:action] = :decrypt if ARGV.include?("--decrypt") || ARGV.include?("-d")
-  args[:action] = :crack if ARGV.include?("--crack") || ARGV.include?("-c")
+  args[:action] = :encrypt if ARGV.include?("--encrypt")
+  args[:action] = :decrypt if ARGV.include?("--decrypt")
+  args[:action] = :crack if ARGV.include?("--crack")
   args[:key] = (ARGV.include?("-k") ? ARGV[ARGV.index("-k") + 1] : nil)
   args[:date] = (ARGV.include?("-d") ? ARGV[ARGV.index("-d") + 1] : nil)
   args[:input_path] = (ARGV.include?("-i") ? ARGV[ARGV.index("-i") + 1] : nil)
