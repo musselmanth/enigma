@@ -7,7 +7,7 @@ The command line interfaces can also take optional arguments so that functionali
 ## Object Oriented Programming
 >I created three other classes for encapsulating the Enigma:
 > - **Cryptor:** Handles both encryption and decryption depending on an `action` argument passed to it. The functionality is nearly identical for either action. Cryptor removes character that are not within the character set and passes the remaining characters to the `shifters` for encryption/decryption. After encryption/decryption is complete the Cryptor adds the other characters back in.
-> - **Shifter:** Handles the encryption of a single character. Has a factory method called on by the `Cryptor` that generates four instances of Shifter for each of the A, B, C, and D shifters. 
+> - **Shifter:** Handles the encryption of a single character. Has a factory method called on by the `Cryptor` that generates four instances of Shifter for each of the A, B, C, and D shifters. The shifters either have a negative or positive `@shift` instance variable depending on whether the `Cryptor` is encrypting or decrypting.
 > - **Cracker:** Cracker is a child class of `Cryptor`. It functions the same as the `Cryptor` with the `:decrypt` action argument, however during initialization it uses various helper methods to crack the key before passing the key on to the `super` method for `Cryptor#initialize` 
 
 ## Ruby Conventions and Mechanics
