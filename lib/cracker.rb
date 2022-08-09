@@ -10,7 +10,7 @@ class Cracker < Cryptor
   end
 
   def crack_key(encrypted_message, date)
-    cipher = remove_characters(encrypted_message.downcase.split(//))[:remaining_chars]
+    cipher = segregate_characters(encrypted_message.downcase.split(//))[:remaining_chars]
     offsets = (date.to_i ** 2).digits.reverse[-4..-1]
     shift_amounts = get_shift_amounts(cipher)
     ordered_shift_amounts = order_shift_amounts(shift_amounts, (cipher.length - 1) % 4)
