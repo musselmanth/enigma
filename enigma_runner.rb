@@ -4,34 +4,15 @@ require 'date'
 def run
   args = get_cl_arguments
   input = File.read(args[:input_path])
-  
-  encrypt_run(input, args[:output_path], args[:key], args[:date]) if args[:action] == :encrypt
-  decrypt_run(input, args[:output_path], args[:key], args[:date]) if args[:action] == :decrypt
-  crack_run(input, args[:output_path], args[:date]) if args[:action] == :crack
-end
-
-def encrypt_run(input, output_path, key, date)
   enigma = Enigma.new
-  output = enigma.encrypt(input, key, date)
-  output_file = File.open(output_path, "w")
-  output_file.write(output[:encryption])
-  puts "Encrypted message in '#{output_path}' with the key #{output[:key]} and the date #{output[:date]}."
-end
-
-def decrypt_run(input, output_path, key, date)
-  enigma = Enigma.new
-  output = enigma.decrypt(input, key, date)
-  output_file = File.open(output_path, "w")
-  output_file.write(output[:decryption])
-  puts "Decrypted message in '#{output_path}' with the key #{output[:key]} and the date #{output[:date]}."
-end
-
-def crack_run(input, output_path, date)
-  enigma = Enigma.new
-  output = enigma.crack(input, date)
-  output_file = File.open(output_path, "w")
-  output_file.write(output[:decryption])
-  puts "Cracked message in '#{output_path}' with the key #{output[:key]} and the date #{output[:date]}."
+  output = enigma.encrypt(input, args[:key], args[:date]) if args[:action] == :encrypt
+  output = enigma.decrypt(input, args[:key], args[:date]) if args[:action] == :decrypt
+  output = enigma.crack(input, args[:date]) if args[:action] == :crack
+  output[:result] = output.delete(:decryption) if args[:action] == :decrypt || args[:action] == :crack
+  output[:result] = output.delete(:encryption) if args[:action] == :encrypt
+  output_file = File.open(args[:output_path], "w")
+  output_file.write(output[:result])
+  puts "Created '#{args[:output_path]}' with the key #{output[:key]} and the date #{output[:date]}."
 end
 
 def get_cl_arguments
@@ -44,16 +25,12 @@ def get_cl_arguments
   args[:date] = (ARGV.include?("-d") ? ARGV[ARGV.index("-d") + 1] : nil)
   args[:input_path] = (ARGV.include?("-i") ? ARGV[ARGV.index("-i") + 1] : nil)
   args[:output_path] = (ARGV.include?("-o") ? ARGV[ARGV.index("-o") + 1] : nil)
-  unless valid_arguments?(args) 
-    error_output
-  end
+  error_output unless valid_arguments?(args) 
   args
 end
 
 def valid_arguments?(args)
-  args[:action] &&
-  args[:input_path] &&
-  args[:output_path] &&
+  args[:action] && args[:input_path] && args[:output_path] &&
   File.extname(args[:input_path]) == ".txt" &&
   File.extname(args[:output_path]) == ".txt" &&
   File.exist?(args[:input_path]) &&
@@ -70,31 +47,31 @@ def error_output
 end
 
 def help_output
-  puts "\nRun 'ruby enigma_runner.rb' with one of the three following action flags:"
-  puts "\n--encrypt"
-  puts "  Requires -i and -o flags with input and output files."
-  puts "  If no key is provided, one will be generated randomly."
-  puts "  If no date is provided, today's date will be used."
-  puts "\n--decrypt"
-  puts "  Requires -i and -o flags with input and output files."
-  puts "  Also requires a key be provided with the -k flag."
-  puts "  If no date is provided, today's date will be used."
-  puts "\n--crack"
-  puts "  Requires -i and -o flags with input and output files."
-  puts "  Does not take a key. if one is provided it will be ignored."
-  puts "  If no date is provided, today's date will be used."
-  puts "\nOther Flags:"
-  puts "  -i file_path.txt"
-  puts "    Input file path. File must exist and be a .txt file."
-  puts "  -o file_path.txt"
-  puts "    Output file path. If file does not exist it will be created. Must be .txt file."
-  puts "  -k #####"
-  puts "    Key for encryption / decryption. Key must be a five digit number."
-  puts "  -d DDMMYY"
-  puts "    Date of encryption. Must be a valid date and formatted as above."
-  puts "\nExamples: 'ruby enigma_runner.rb --encrypt -i input.txt -o output.txt -k 12345 -d 150722'"
-  puts   "          'ruby enigma_runner.rb --decrypt -i input.txt -o output.txt -k 94857'"
-  puts   "          'ruby enigma_runner.rb --crack -i input.txt -o output.txt -d 070822'\n\n"
+  puts "\nRun 'ruby enigma_runner.rb' with one of the three following action flags:\n" +
+       "\n--encrypt\n" +
+       "  Requires -i and -o flags with input and output files.\n" +
+       "  If no key is provided, one will be generated randomly.\n" +
+       "  If no date is provided, today's date will be used.\n" +
+       "\n--decrypt\n" +
+       "  Requires -i and -o flags with input and output files.\n" +
+       "  Also requires a key be provided with the -k flag.\n" +
+       "  If no date is provided, today's date will be used.\n" +
+       "\n--crack\n" +
+       "  Requires -i and -o flags with input and output files.\n" +
+       "  Does not take a key. if one is provided it will be ignored.\n" +
+       "  If no date is provided, today's date will be used.\n" +
+       "\nOther Flags:\n" +
+       "  -i file_path.txt\n" +
+       "    Input file path. File must exist and be a .txt file.\n" +
+       "  -o file_path.txt\n" +
+       "    Output file path. If file does not exist it will be created. Must be .txt file.\n" +
+       "  -k #####\n" +
+       "    Key for encryption / decryption. Key must be a five digit number.\n" +
+       "  -d DDMMYY\n" +
+       "    Date of encryption. Must be a valid date and formatted as above.\n" +
+       "\nExamples: 'ruby enigma_runner.rb --encrypt -i input.txt -o output.txt -k 12345 -d 150722'\n" +
+         "          'ruby enigma_runner.rb --decrypt -i input.txt -o output.txt -k 94857'\n" +
+         "          'ruby enigma_runner.rb --crack -i input.txt -o output.txt -d 070822'\n\n" 
   exit
 end
 
