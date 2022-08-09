@@ -1,8 +1,9 @@
 # Enigma Self Assessment - Tom Musselman
 
 ## Functionality
->I was able to complete the #crack, #encrypt, #decrypt methods for Enigma as well as command line interfaces for all three.  
-The command line interfaces can also take optional arguments so that functionality is similar to the Enigma methods themselves.
+> - I was able to complete the #crack, #encrypt, #decrypt methods for Enigma.
+> - I created CLI runner files for all three and later refactored with just one runner file that can take arguments for which action to complete.
+The runner can also take optional arguments so that functionality is similar to the Enigma methods themselves. It also validates the arguments being given.
 
 ## Object Oriented Programming
 >I created three other classes for encapsulating the Enigma:
