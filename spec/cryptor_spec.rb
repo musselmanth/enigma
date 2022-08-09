@@ -22,7 +22,7 @@ RSpec.describe Cryptor do
         removed_chars: { 2 => "3", 5 => "?" , 7 => "!" },
         remaining_chars: ["a", "b", "c", "d", "e", "f"]
       }
-      expect(encryptor.remove_characters(input_chars)).to eq(expected)
+      expect(encryptor.segregate_characters(input_chars)).to eq(expected)
     end
   end
 
