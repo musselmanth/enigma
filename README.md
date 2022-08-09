@@ -12,7 +12,7 @@ The command line interfaces can also take optional arguments so that functionali
 
 ## Ruby Conventions and Mechanics
 > - Based on my own judgement the code is formatted correctly and consistently. 
-> - I used multiple hashes, the best examples being in the `Cryptor#remove_characters` and `Cryptor#insert_removed_chars` methods. 
+> - I used multiple hashes, the best examples being in the `Cryptor#segregate_characters` and `Cryptor#join_characters` methods. 
 > - No methods are longer than 10 lines long.
 > - I believe all (or at least most) enumerables are the best tool for the job. There are occasions where `.each` is used, and in each case I believe it was the best tool for the job. There is one method in particular (`Cracker#get_matching_key_segments`) that I would've liked to have found a more efficient way to approach, however it would've added considerable more complexity to the problem.
 
@@ -22,7 +22,7 @@ The command line interfaces can also take optional arguments so that functionali
 > - Stubs were used in the `enigma_spec.rb` file to test functions that involved both date or `rand()`.
 
 ## Version Control
-> - 9 pull requests and 91 commits (as of writing this)
+> - 10 pull requests and 90+ commits (as of writing this)
 > - Pull requests are organized based on what is being built or refactored. They include detailed descriptions.
 > - The only commits that involve multiple functionalities are ones that involve various minor changes like renaming variables or code reorganization.
 
