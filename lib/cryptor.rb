@@ -12,29 +12,29 @@ class Cryptor
 
   def run(input)
     characters = input.downcase.split(//)
-    split_chars = remove_characters(characters)
-    characters = split_chars[:remaining_chars]
-    removed_chars = split_chars[:removed_chars]
-    encrypted = characters.map.with_index do |character, i|
+    seg_chars = segregate_characters(characters)
+    output_chars = seg_chars[:remaining_chars].map.with_index do |character, i|
       @shifters[i % 4].shift_character(character)
     end
-    final_encryption = insert_removed_chars(encrypted, removed_chars)
-    final_encryption.join
+    join_characters(output_chars, seg_chars[:removed_chars])
   end
 
-  def remove_characters(characters)
-    removed_chars = {}
-    remaining_chars = []
+  def segregate_characters(characters)
+    result = {removed_chars: {}, remaining_chars: []}
     characters.each_with_index do |char, i|
-      CHARACTER_SET.include?(char) ? remaining_chars << char : removed_chars[i] = char
+      if CHARACTER_SET.include?(char) 
+        result[:remaining_chars] << char
+      else
+        result[:removed_chars][i] = char
+      end
     end
-    {removed_chars: removed_chars, remaining_chars: remaining_chars}
+    result
   end
 
-  def insert_removed_chars(encrypted, removed_chars)
-    removed_chars.inject(encrypted) do |encrypted, (i, char)|
-      encrypted.insert(i, char)
-    end
+  def join_characters(output_chars, removed_chars)
+    removed_chars.inject(output_chars) do |output_chars, (i, char)|
+      output_chars.insert(i, char)
+    end.join
   end
 
 end
